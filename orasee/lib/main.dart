@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './src/pages/index.dart';
+import './video_calling/pages/index.dart';
 
 void main() {
   runApp(const MyApp());

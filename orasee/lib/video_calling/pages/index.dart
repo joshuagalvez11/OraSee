@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
 
 import './call.dart';
+import '../utils/settings.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -13,19 +15,19 @@ class IndexPage extends StatefulWidget {
 
 class IndexState extends State<IndexPage> {
   /// create a channelController to retrieve text value
-  final _channelController = TextEditingController();
+  //final _channelController = TextEditingController();
 
   /// if channel textField is validated to have error
   bool _validateError = false;
 
   ClientRole? _role = ClientRole.Broadcaster;
 
-  @override
-  void dispose() {
-    // dispose input controller
-    _channelController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // dispose input controller
+  //   _channelController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -39,27 +41,28 @@ class IndexState extends State<IndexPage> {
           height: 400,
           child: Column(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: _channelController,
-                      decoration: InputDecoration(
-                        errorText:
-                            _validateError ? 'Channel name is mandatory' : null,
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(width: 1),
-                        ),
-                        hintText: 'Channel name',
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              // Row(
+              // children: <Widget>[
+              //   Expanded(
+              //     child: TextField(
+              //       // controller: _channelController,
+              //       decoration: InputDecoration(
+              //         errorText:
+              //             _validateError ? 'Channel name is mandatory' : null,
+              //         border: UnderlineInputBorder(
+              //           borderSide: BorderSide(width: 1),
+              //         ),
+              //         hintText: 'Channel name',
+              //       ),
+              //     ),
+              //   )
+              // ],
+              // ),
               Column(
                 children: [
                   ListTile(
-                    title: Text(ClientRole.Broadcaster.toString()),
+                    // title: Text(ClientRole.Broadcaster.toString()),
+                    title: Text("Blind/Low Vision User"),
                     leading: Radio(
                       value: ClientRole.Broadcaster,
                       groupValue: _role,
@@ -71,7 +74,8 @@ class IndexState extends State<IndexPage> {
                     ),
                   ),
                   ListTile(
-                    title: Text(ClientRole.Audience.toString()),
+                    //title: Text(ClientRole.Audience.toString()),
+                    title: Text("Sighted Volunteer"),
                     leading: Radio(
                       value: ClientRole.Audience,
                       groupValue: _role,
@@ -117,14 +121,22 @@ class IndexState extends State<IndexPage> {
     );
   }
 
+  // Get token
+  Future<String> getToken() async {
+    var response = await http.get(
+        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+        headers: {"Accept": "application/json"});
+
+    print(response.body);
+    return response.body;
+  }
+
   Future<void> onJoin() async {
     // update input validation
     setState(() {
-      _channelController.text.isEmpty
-          ? _validateError = true
-          : _validateError = false;
+      channel.isEmpty ? _validateError = true : _validateError = false;
     });
-    if (_channelController.text.isNotEmpty) {
+    if (channel.isNotEmpty) {
       // await for camera and mic permissions before pushing video page
       await _handleCameraAndMic(Permission.camera);
       await _handleCameraAndMic(Permission.microphone);
@@ -133,12 +145,13 @@ class IndexState extends State<IndexPage> {
         context,
         MaterialPageRoute(
           builder: (context) => CallPage(
-            channelName: _channelController.text,
+            channelName: channel,
             role: _role,
           ),
         ),
       );
     }
+    // getToken();
   }
 
   Future<void> _handleCameraAndMic(Permission permission) async {
