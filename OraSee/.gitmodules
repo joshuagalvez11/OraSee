@@ -1,0 +1,3 @@
+[submodule "OraSee"]
+	path = OraSee
+	url = https://github.com/joshuagalvez11/OraSee.git
