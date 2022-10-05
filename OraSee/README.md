@@ -1,6 +1,21 @@
 # swip_change
 
-A new Flutter project.
+Flutter project.
+
+DataBase:
+  - Firebase_Auth, Firebase_Cloud_FireStore
+  
+Feature：
+  - Email & password SignIn & SignOut
+  - Google Signin & SignOut
+  - Screen Navigate (HomePage, CommunityPage, SettingPage) with Bottom Navigation Bar
+  - HomePage Set up
+  - Setting Page Set up:
+    - Show User Account Information
+    - Edit User Account Information
+    - Delete User Account
+    - Edit Email Address
+    - Reset Password
 
 ## Getting Started
 
