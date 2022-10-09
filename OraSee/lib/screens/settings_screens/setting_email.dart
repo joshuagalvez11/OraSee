@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:swip_change/email_login.dart';
 import 'package:swip_change/model/user_model.dart';
 
 class EmailSetting extends StatefulWidget {
@@ -14,10 +16,11 @@ class EmailSetting extends StatefulWidget {
 
 class _EmailSettingState extends State<EmailSetting> {
   final nEmailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loginUser = UserModel();
   FirebaseAuth _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -38,7 +41,7 @@ class _EmailSettingState extends State<EmailSetting> {
 
     final AccountContainer = Container(
       width: width,
-      height: height * 0.2,
+      height: height * 0.24,
       decoration: BoxDecoration(
         color: Colors.grey[800],
         borderRadius: BorderRadius.circular(15),
@@ -50,14 +53,32 @@ class _EmailSettingState extends State<EmailSetting> {
             SizedBox(
               height: 10,
             ),
-            TextField(
+            TextFormField(
               style: TextStyle(
                 color: Colors.white,
               ),
               controller: nEmailController,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
-              // validator: (){},
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return ("Please Enter your Email");
+                }
+                // reg experssion
+                if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                    .hasMatch(value)) {
+                  return ("Please Enter a Vaild email");
+                }
+
+                if (value == loginUser.email) {
+                  return ("Please Enter a New email");
+                }
+
+                return null;
+              },
+              onSaved: (value) {
+                nEmailController.text = value!;
+              },
               decoration: InputDecoration(
                 hintText: "New Email",
                 hintStyle: TextStyle(
@@ -73,22 +94,34 @@ class _EmailSettingState extends State<EmailSetting> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             TextFormField(
               style: TextStyle(
                 color: Colors.white,
               ),
-              controller: passwordController,
-              textInputAction: TextInputAction.done,
-              // validator: () {
-              //   if(passwordController.text!=_auth.currentUser.password)
-              // },
-              onSaved: (newValue) {
-                passwordController.text = newValue!;
+              controller: emailController,
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return ("Please Enter your Email");
+                }
+                // reg experssion
+                if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                    .hasMatch(value)) {
+                  return ("Please Enter a Vaild email");
+                }
+                if (value != loginUser.email) {
+                  return ("Please Enter your current Email");
+                }
+                return null;
+              },
+              onSaved: (value) {
+                emailController.text = value!;
               },
               decoration: InputDecoration(
-                hintText: "Password",
+                hintText: "Old Email",
                 hintStyle: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
@@ -123,8 +156,29 @@ class _EmailSettingState extends State<EmailSetting> {
         actions: [
           TextButton(
             onPressed: () {
-              if (passwordController.value.text.isNotEmpty) {
-                user!.updateEmail(nEmailController.text);
+              if (_formKey.currentState!.validate()) {
+                if (nEmailController.text != emailController.text) {
+                  user!.updateEmail(nEmailController.text).then((value) => {
+                        FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(user!.uid)
+                            .update({"email": nEmailController.text})
+                            .then((value) => {
+                                  Fluttertoast.showToast(
+                                      msg: "Update successful"),
+                                  setState(() {}),
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EmailLoginPage(
+                                              option: loginUser.options)))
+                                })
+                            .catchError((e) {
+                              Fluttertoast.showToast(
+                                  msg: "Update Error" + e.toString());
+                            }),
+                      });
+                }
               }
             },
             child: Text(
@@ -140,13 +194,16 @@ class _EmailSettingState extends State<EmailSetting> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: height * 0.03,
-              ),
-              AccountContainer,
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: height * 0.03,
+                ),
+                AccountContainer,
+              ],
+            ),
           ),
         ),
       ),

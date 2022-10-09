@@ -8,16 +8,14 @@ import 'package:swip_change/home.dart';
 import 'package:swip_change/model/user_model.dart';
 
 class EmailLoginPage extends StatefulWidget {
-  String option;
+  final String? option;
   EmailLoginPage({super.key, required this.option});
 
   @override
-  State<EmailLoginPage> createState() => _EmailLoginPageState(option);
+  State<EmailLoginPage> createState() => _EmailLoginPageState();
 }
 
 class _EmailLoginPageState extends State<EmailLoginPage> {
-  String option;
-  _EmailLoginPageState(this.option);
   final fnameController = TextEditingController();
   final lnameController = TextEditingController();
   final emailController = TextEditingController();
@@ -338,7 +336,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
     userModel.uid = user.uid;
     userModel.firstName = fnameController.text;
     userModel.lastName = lnameController.text;
-    userModel.options = option;
+    userModel.options = widget.option;
 
     await firebaseFirestore
         .collection("users")

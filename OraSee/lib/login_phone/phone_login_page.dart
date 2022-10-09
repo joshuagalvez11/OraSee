@@ -9,17 +9,14 @@ import 'package:swip_change/login_phone/phone_verify_page.dart';
 import 'package:swip_change/model/user_model.dart';
 
 class PhoneLoginPage extends StatefulWidget {
-  String option;
+  final String option;
   PhoneLoginPage({super.key, required this.option});
 
   @override
-  State<PhoneLoginPage> createState() => _PhoneLoginPageState(option);
+  State<PhoneLoginPage> createState() => _PhoneLoginPageState();
 }
 
 class _PhoneLoginPageState extends State<PhoneLoginPage> {
-  String option;
-  _PhoneLoginPageState(this.option);
-  
   final phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -72,7 +69,6 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  
                   TextFormField(
                     controller: phoneController,
                     textInputAction: TextInputAction.done,
@@ -150,16 +146,17 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
         },
         verificationFailed: (FirebaseAuthException e) {
           Fluttertoast.showToast(msg: "Something Went Wrong" + e.toString());
-
         },
         codeSent: (String verificationId, int? token) {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: ((context) => PhoneVerifyPage(
-                  verificationId: verificationId,
-                  token: token,
-                  options: option)),
+                    verificationId: verificationId,
+                    token: token,
+                    options: widget.option,
+                    phone: phoneController.text,
+                  )),
             ),
           );
         },
@@ -167,7 +164,6 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
           Fluttertoast.showToast(msg: "Something Went Wrong" + e.toString());
         },
       );
-
     }
   }
 }

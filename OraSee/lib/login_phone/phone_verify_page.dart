@@ -9,12 +9,15 @@ class PhoneVerifyPage extends StatefulWidget {
   final String verificationId;
   final int? token;
   final String options;
+  final String phone;
 
-  const PhoneVerifyPage(
-      {super.key,
-      required this.verificationId,
-      required this.token,
-      required this.options});
+  const PhoneVerifyPage({
+    super.key,
+    required this.verificationId,
+    required this.token,
+    required this.options,
+    required this.phone,
+  });
 
   @override
   State<PhoneVerifyPage> createState() => _PhoneVerifyPageState();
@@ -145,6 +148,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
 
     userModel.uid = user!.uid;
     userModel.options = widget.options;
+    userModel.phone = widget.phone;
 
     await firebaseFirestore
         .collection("users")

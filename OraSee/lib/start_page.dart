@@ -14,22 +14,37 @@ import 'package:swip_change/login_phone/phone_login_page.dart';
 import 'package:swip_change/model/user_model.dart';
 
 class StartPage extends StatefulWidget {
-  String option;
-  StartPage({super.key, required this.option});
+  final String option;
+  final bool? logOut;
+  StartPage({super.key, required this.option, required this.logOut});
 
   @override
-  State<StartPage> createState() => _StartPageState(option);
+  State<StartPage> createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage> {
-  String option;
-  _StartPageState(this.option);
   FirebaseAuth _auth = FirebaseAuth.instance;
-  String email='';
-  String name='';
-  // facebook sign in 
+  String email = '';
+  String name = '';
+  // facebook sign in
   Map<String, dynamic>? _userData;
-  
+  AccessToken? _accessToken;
+
+  _login() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+
+    if (result.status == LoginStatus.success) {
+      _accessToken = result.accessToken;
+
+      final userData = await FacebookAuth.instance.getUserData();
+      _userData = userData;
+
+      print(_userData);
+    } else {
+      print(result.status);
+      print(result.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +56,26 @@ class _StartPageState extends State<StartPage> {
           padding: const EdgeInsets.only(left: 8.0, right: 8.0),
           child: Column(
             children: [
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(Icons.arrow_back),
-                    color: Color(0xff381BE9),
-                  ),
-                  Text(
-                    "back",
-                    style: TextStyle(
-                      color: Color(0xff381BE9),
-                      fontSize: 20,
+              (widget.logOut == true)
+                  ? Container()
+                  : Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icon(Icons.arrow_back),
+                          color: Color(0xff381BE9),
+                        ),
+                        Text(
+                          "back",
+                          style: TextStyle(
+                            color: Color(0xff381BE9),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
               SizedBox(
                 height: height * 0.1,
               ),
@@ -88,7 +105,7 @@ class _StartPageState extends State<StartPage> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return EmailLoginPage(
-                            option: option,
+                            option: widget.option,
                           );
                         }));
                       },
@@ -140,7 +157,12 @@ class _StartPageState extends State<StartPage> {
                             borderRadius: BorderRadius.circular(15),
                           )),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PhoneLoginPage(option:option,)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PhoneLoginPage(
+                                      option: widget.option,
+                                    )));
                       },
                       child: Text(
                         "Continue with Phone",
@@ -164,10 +186,8 @@ class _StartPageState extends State<StartPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           )),
-                      onPressed: ()   {
-                         signInWithFacebook();
-                          
-
+                      onPressed: () {
+                        signInWithFacebook();
                       },
                       child: Text(
                         "Continue with FaceBook",
@@ -209,43 +229,33 @@ class _StartPageState extends State<StartPage> {
   }
 
   void signInWithFacebook() async {
-  
-  final LoginResult loginResult = await FacebookAuth.instance.login(
-    permissions: [
-      'email', 'public_profile', 'user_birthday'
-    ]
-  );
+    final LoginResult loginResult = await FacebookAuth.instance
+        .login(permissions: ['email', 'public_profile', 'user_birthday']);
 
-  if(loginResult.status==LoginStatus.success){
-    final AuthCredential facebookCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    if (loginResult.status == LoginStatus.success) {
+      final AuthCredential facebookCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
-     final userData = await FacebookAuth.instance.getUserData();
-    _userData = userData;
+      final userData = await FacebookAuth.instance.getUserData();
+      _userData = userData;
 
-    name=_userData!['name'];
-    email=_userData!['email'];
+      name = _userData!['name'];
+      email = _userData!['email'];
 
+      await _auth
+          .signInWithCredential(facebookCredential)
+          .then((uid) => {FacebookPostDetailsToFirestore()})
+          .catchError((e) {
+        print(e.toString());
+      });
 
-    await _auth.signInWithCredential(facebookCredential)
-    .then((uid) => {
-       FacebookPostDetailsToFirestore()
-       
-     }).catchError((e){
-       print(e.toString());
-     });
-
-     print(name);
-    print(email);
-
-        
-   }else{
-    print(loginResult.status);
-    print(loginResult.message);
-   }
-  
-}
-
-
+      print(name);
+      print(email);
+    } else {
+      print(loginResult.status);
+      print(loginResult.message);
+    }
+  }
 
   postDetailsToFirestore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -255,15 +265,14 @@ class _StartPageState extends State<StartPage> {
     UserModel userModel = UserModel();
 
     final Name = user?.displayName?.split(" ");
-    final firstname=Name![0];
-    final lastname=Name[1];
-
+    final firstname = Name![0];
+    final lastname = Name[1];
 
     userModel.email = user!.email;
     userModel.uid = user.uid;
     userModel.firstName = firstname;
-    userModel.lastName=lastname;
-    userModel.options = option;
+    userModel.lastName = lastname;
+    userModel.options = widget.option;
 
     await firebaseFirestore
         .collection("users")
@@ -284,24 +293,23 @@ class _StartPageState extends State<StartPage> {
     UserModel userModel = UserModel();
 
     final Name = name.split(" ");
-    final firstname=Name[0];
-    final lastname=Name[1];
-
+    final firstname = Name[0];
+    final lastname = Name[1];
 
     userModel.email = email;
     userModel.uid = user!.uid;
     userModel.firstName = firstname;
-    userModel.lastName=lastname;
-    userModel.options = option;
+    userModel.lastName = lastname;
+    userModel.options = widget.option;
 
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
         .set(userModel.toJson());
 
-     Fluttertoast.showToast(msg: "Account Create Successful");
+    Fluttertoast.showToast(msg: "Account Create Successful");
 
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 }
-

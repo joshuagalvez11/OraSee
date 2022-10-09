@@ -149,6 +149,7 @@ class _LandingState extends State<Landing> {
                           builder: ((context) {
                             return StartPage(
                               option: _seeker,
+                              logOut: false,
                             );
                           }),
                         ),
@@ -195,6 +196,7 @@ class _LandingState extends State<Landing> {
                           MaterialPageRoute(
                               builder: (context) => StartPage(
                                     option: _volunteer,
+                                    logOut: false,
                                   )));
                     },
                     child: Column(
