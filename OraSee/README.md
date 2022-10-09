@@ -1,7 +1,6 @@
 # swip_change
 
-<<<<<<< HEAD
-A new Flutter project.
+COMP 490 Project
 =======
 Flutter project.
 
@@ -12,6 +11,9 @@ Feature：
   - Email & password SignIn & SignOut
   - Google Signin & SignOut
   - Facebook Signin & SignOut
+  - Phone Login and Verify by OTP
+    - when Signing, the format of Phone Number must follow the formate "+1 234 456 789"
+    - after Signing, user can Edit their personal Infomation (Name, Email) in Setting Page
   - Screen Navigate (HomePage, CommunityPage, SettingPage) with Bottom Navigation Bar
   - HomePage Set up
   - Setting Page Set up:
@@ -20,7 +22,7 @@ Feature：
     - Delete User Account
     - Edit Email Address
     - Reset Password
->>>>>>> 3c7bf7eec570ef14bed6edadded45d9e46b5e443
+  - After LogOut, User cannot go back to Landing Page, Unless Delete the User
 
 ## Getting Started
 
