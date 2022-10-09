@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:swip_change/login.dart';
+import 'package:swip_change/email_login.dart';
+import 'package:swip_change/landing.dart';
 import 'package:swip_change/model/user_model.dart';
 
 class SettingAccount extends StatefulWidget {
@@ -58,11 +59,12 @@ class _SettingAccountState extends State<SettingAccount> {
                 style: TextStyle(
                   color: Colors.white,
                 ),
-                controller: fnameController,
-                textInputAction: TextInputAction.next,
+                controller: lnameController,
+                textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
                   hintText: "${loginUser.firstName}",
+                  // hintText: "FirstName",
                   hintStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -77,7 +79,7 @@ class _SettingAccountState extends State<SettingAccount> {
               ),
             ),
             SizedBox(
-              height: 15,
+              height: 10,
             ),
             SizedBox(
               width: width,
@@ -90,6 +92,7 @@ class _SettingAccountState extends State<SettingAccount> {
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
                   hintText: "${loginUser.lastName}",
+                  // hintText: "FirstName",
                   hintStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -103,6 +106,7 @@ class _SettingAccountState extends State<SettingAccount> {
                 ),
               ),
             ),
+            
             SizedBox(
               height: 10,
             ),
@@ -227,9 +231,7 @@ class _SettingAccountState extends State<SettingAccount> {
                             Fluttertoast.showToast(msg: "Delete Successful"),
                           });
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => LoginPage(
-                                option: "",
-                              )));
+                          builder: (context) => Landing()));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[800],
@@ -252,4 +254,6 @@ class _SettingAccountState extends State<SettingAccount> {
       ),
     );
   }
+
+
 }

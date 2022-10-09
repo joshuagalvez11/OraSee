@@ -7,17 +7,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:swip_change/home.dart';
 import 'package:swip_change/model/user_model.dart';
 
-class LoginPage extends StatefulWidget {
+class EmailLoginPage extends StatefulWidget {
   String option;
-  LoginPage({super.key, required this.option});
+  EmailLoginPage({super.key, required this.option});
 
   @override
-  State<LoginPage> createState() => _LoginPageState(option);
+  State<EmailLoginPage> createState() => _EmailLoginPageState(option);
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _EmailLoginPageState extends State<EmailLoginPage> {
   String option;
-  _LoginPageState(this.option);
+  _EmailLoginPageState(this.option);
   final fnameController = TextEditingController();
   final lnameController = TextEditingController();
   final emailController = TextEditingController();

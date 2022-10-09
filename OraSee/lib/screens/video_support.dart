@@ -41,39 +41,43 @@ class _VideoSupportState extends State<VideoSupport> {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: height*0.03,),
-            Center(
-              child: TitleText(),
-            ),
-            SizedBox(
-              height: height * 0.03,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: width,
-                height: height * 0.75,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff381BE9),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      )),
-                  onPressed: () {},
-                  child: ButtonText(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: height * 0.03,
+              ),
+              Center(
+                child: TitleText(),
+              ),
+              SizedBox(
+                height: height * 0.03,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: width,
+                  height: height * 0.75,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff381BE9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )),
+                    onPressed: () {},
+                    child: ButtonText(),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget TitleText() {
-    if ("${loginUser.options}" == "seeker") {
+    if ("${loginUser.options}" == "Seeker") {
       return Text(
         "Get Live Video Help",
         style: TextStyle(

@@ -2,11 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:swip_change/login.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:swip_change/email_login.dart';
+import 'package:swip_change/landing.dart';
 import 'package:swip_change/model/user_model.dart';
 import 'package:swip_change/screens/settings_screens/setting_account.dart';
 import 'package:swip_change/screens/settings_screens/setting_email.dart';
 import 'package:swip_change/screens/settings_screens/setting_password.dart';
+import 'package:swip_change/start_page.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -199,9 +202,10 @@ class _SettingState extends State<Setting> {
 
   Future<void> SignOut(BuildContext context) async {
     await _auth.signOut();
+    await FacebookAuth.instance.logOut();
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => LoginPage(
-              option: "",
-            )));
+        builder: (context) => StartPage(
+          option:"",
+        )));
   }
 }

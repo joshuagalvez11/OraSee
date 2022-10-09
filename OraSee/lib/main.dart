@@ -4,7 +4,7 @@ import 'package:swip_change/home.dart';
 import 'package:swip_change/landing.dart';
 import 'package:swip_change/start_page.dart';
 
-import 'login.dart';
+import 'email_login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
