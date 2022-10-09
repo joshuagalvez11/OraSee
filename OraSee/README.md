@@ -9,7 +9,6 @@ Feature：
   - Email & password SignIn & SignOut
   - Google Signin & SignOut
   - Facebook Signin & SignOut
-  - Phone Number Login (Haven't finished, only can login)
   - Screen Navigate (HomePage, CommunityPage, SettingPage) with Bottom Navigation Bar
   - HomePage Set up
   - Setting Page Set up:
