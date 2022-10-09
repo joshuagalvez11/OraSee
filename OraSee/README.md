@@ -14,7 +14,7 @@ Feature：
   - Phone Login and Verify by OTP
     - when Signing, the format of Phone Number must follow the formate "+1 234 456 789"
     - after Signing, user can Edit their personal Infomation (Name, Email) in Setting Page
-  - Screen Navigate (HomePage, CommunityPage, SettingPage) with Bottom Navigation Bar
+  - Screen Navigate by Swiping (HomePage, CommunityPage, SettingPage) with Bottom Navigation Bar
   - HomePage Set up
   - Setting Page Set up:
     - Show User Account Information
