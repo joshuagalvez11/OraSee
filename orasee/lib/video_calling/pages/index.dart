@@ -15,7 +15,7 @@ class IndexPage extends StatefulWidget {
 
 class IndexState extends State<IndexPage> {
   /// create a channelController to retrieve text value
-  //final _channelController = TextEditingController();
+  final _channelController = TextEditingController();
 
   /// if channel textField is validated to have error
   bool _validateError = false;
@@ -58,6 +58,23 @@ class IndexState extends State<IndexPage> {
               //   )
               // ],
               // ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      controller: _channelController,
+                      decoration: InputDecoration(
+                        errorText:
+                            _validateError ? 'Channel name is mandatory' : null,
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(width: 1),
+                        ),
+                        hintText: 'Channel name',
+                      ),
+                    ),
+                  )
+                ],
+              ),
               Column(
                 children: [
                   ListTile(
@@ -103,6 +120,20 @@ class IndexState extends State<IndexPage> {
                                 MaterialStateProperty.all(Colors.white)),
                       ),
                     ),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final response = await getToken().then((value) => {});
+                          // here you can show toast or pop or whatever you wanna do
+                        },
+                        child: Text('Token'),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.blueAccent),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.white)),
+                      ),
+                    ),
                     // Expanded(
                     //   child: RaisedButton(
                     //     onPressed: onJoin,
@@ -123,11 +154,14 @@ class IndexState extends State<IndexPage> {
 
   // Get token
   Future<String> getToken() async {
-    var response = await http.get(
-        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-        headers: {"Accept": "application/json"});
+    final response = await http.get(
+        // Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+        Uri.parse("http://10.0.2.2:8080/new_caller?id=2&type=volunteer"),
+        headers: {"Accept": "application/json", "Connection": "Keep-Alive"});
 
     print(response.body);
+
+    _channelController.text = response.body;
     return response.body;
   }
 
@@ -151,7 +185,6 @@ class IndexState extends State<IndexPage> {
         ),
       );
     }
-    // getToken();
   }
 
   Future<void> _handleCameraAndMic(Permission permission) async {
