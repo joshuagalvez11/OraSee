@@ -24,6 +24,10 @@ Feature：
     - Reset Password
   - After LogOut, User cannot go back to Landing Page, Unless Delete the User
 
+Tips:
+ - cannot use same email address to login in facebook, google
+ - the phone number format input have to follow +1 234 567 890
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
