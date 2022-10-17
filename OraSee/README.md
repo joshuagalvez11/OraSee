@@ -36,6 +36,8 @@ Voice Navigation:
   - be able to use Voice to Navigate different pages
   - be able to use Voice to Sign out account
   - be able to Interacte with AI (Hello, what's you name...)
+  - More Command can look at the 490_Flutter_Voice_Navigate.json file in Alan Studio
+   - Alan Studio https://studio.alan.app/projects/Example%3A%20Flutter%20Shrine/scripts/490_Flutter_Voice_Navigate
  
 
 
