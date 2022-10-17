@@ -42,6 +42,7 @@ dependencies:
   firebase_auth: ^3.10.0
   google_sign_in:
   flutter_facebook_auth: ^4.4.1+1
+  alan_voice: 3.0.0
 
 dev_dependencies:
   flutter_test:

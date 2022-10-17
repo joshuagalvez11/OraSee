@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:alan_voice/alan_voice.dart';
+import 'package:swip_change/model/user_model.dart';
 import 'package:swip_change/screens/community.dart';
 import 'package:swip_change/screens/setting.dart';
+import 'package:swip_change/screens/test.dart';
 import 'package:swip_change/screens/video_support.dart';
+import 'package:swip_change/start_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,6 +20,68 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loginUser = UserModel();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+
+
+  _HomePageState() {
+   /// Init Alan Button with project key from Alan Studio      
+  AlanVoice.addButton(
+    "fb5d55b648fe678389120f328019f6312e956eca572e1d8b807a3e2338fdd0dc/stage",
+    buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT,
+    );
+
+  /// Handle commands from Alan Studio
+  AlanVoice.onCommand.add((command) => _handleCommand(command.data));
+
+}
+
+
+  
+
+  void _handleCommand(Map<String,dynamic>command){
+    switch (command['command']) {
+     
+      case "video":
+        Navigator.pushNamed(context, '/videoPage');
+        break;
+      case "community":
+        Navigator.pushNamed(context, '/communityPage');
+        break;
+      case "setting":
+        Navigator.pushNamed(context, '/settingPage');
+        break;
+      case "Account Information":
+        Navigator.pushNamed(context, '/SAccountInfo');
+        break;
+      case "Email Change":
+        Navigator.pushNamed(context, '/SEmailChange');
+        break;
+      case "Password Change":
+        Navigator.pushNamed(context, '/SPasswordChange');
+        break;
+      case "signout":
+        SignOut(context);
+        break;
+      default:
+        debugPrint("unknown command");
+    }
+  }
+
+   Future<void> SignOut(BuildContext context) async {
+    await _auth.signOut();
+    // await FacebookAuth.instance.logOut();
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => StartPage(
+              option: "",
+              logOut: true,
+            )));
+  }
+
+
   int _currentIndex = 0;
 
   PageController _pageController = PageController(initialPage: 0);
@@ -56,6 +125,8 @@ class _HomePageState extends State<HomePage> {
           Community(),
           Setting(),
         ],
+        
+        
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
