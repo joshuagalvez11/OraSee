@@ -38,6 +38,9 @@ Voice Navigation:
   - be able to Interacte with AI (Hello, what's you name...)
   - More Command can look at the 490_Flutter_Voice_Navigate.json file in Alan Studio
     - Alan Studio https://studio.alan.app/projects/Example%3A%20Flutter%20Shrine/scripts/490_Flutter_Voice_Navigate 
+  Tips:
+    - make sure open the emulator microphone
+      = Emulator -> more -> Microphone -> turnon all the options
  
 
 
