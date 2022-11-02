@@ -4,8 +4,9 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-import '../utils/settings.dart';
+const appId = '3d7f922916c14c39ae45708da368ce74';
 
 class CallPage extends StatefulWidget {
   /// non-modifiable channel name of the page
@@ -14,8 +15,12 @@ class CallPage extends StatefulWidget {
   /// non-modifiable client role of the page
   final ClientRole? role;
 
+  /// non-modifiable token of the page
+  final String? token;
+
   /// Creates a call page with given channel name.
-  const CallPage({Key? key, this.channelName, this.role}) : super(key: key);
+  const CallPage({Key? key, this.channelName, this.role, this.token})
+      : super(key: key);
 
   @override
   _CallPageState createState() => _CallPageState();
@@ -64,7 +69,7 @@ class _CallPageState extends State<CallPage> {
     VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
     configuration.dimensions = VideoDimensions(width: 1920, height: 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
-    await _engine.joinChannel(token, widget.channelName!, null, 0);
+    await _engine.joinChannel(widget.token, widget.channelName!, null, 0);
   }
 
   /// Create agora sdk instance and initialize
@@ -92,6 +97,12 @@ class _CallPageState extends State<CallPage> {
         _infoStrings.add('onLeaveChannel');
         _users.clear();
       });
+
+      // Invalidate channel on leave
+      http.get(
+          Uri.parse(
+              "https://orasee-token-server.herokuapp.com/invalidate_channel?channel=${widget.channelName}"),
+          headers: {"Accept": "application/json"});
     }, userJoined: (uid, elapsed) {
       setState(() {
         final info = 'userJoined: $uid';

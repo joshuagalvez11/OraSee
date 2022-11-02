@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 
 import './call.dart';
-import '../utils/settings.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -14,20 +14,12 @@ class IndexPage extends StatefulWidget {
 }
 
 class IndexState extends State<IndexPage> {
-  /// create a channelController to retrieve text value
-  final _channelController = TextEditingController();
-
-  /// if channel textField is validated to have error
-  bool _validateError = false;
-
   ClientRole? _role = ClientRole.Broadcaster;
 
-  // @override
-  // void dispose() {
-  //   // dispose input controller
-  //   _channelController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,45 +33,10 @@ class IndexState extends State<IndexPage> {
           height: 400,
           child: Column(
             children: <Widget>[
-              // Row(
-              // children: <Widget>[
-              //   Expanded(
-              //     child: TextField(
-              //       // controller: _channelController,
-              //       decoration: InputDecoration(
-              //         errorText:
-              //             _validateError ? 'Channel name is mandatory' : null,
-              //         border: UnderlineInputBorder(
-              //           borderSide: BorderSide(width: 1),
-              //         ),
-              //         hintText: 'Channel name',
-              //       ),
-              //     ),
-              //   )
-              // ],
-              // ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: _channelController,
-                      decoration: InputDecoration(
-                        errorText:
-                            _validateError ? 'Channel name is mandatory' : null,
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(width: 1),
-                        ),
-                        hintText: 'Channel name',
-                      ),
-                    ),
-                  )
-                ],
-              ),
               Column(
                 children: [
                   ListTile(
-                    // title: Text(ClientRole.Broadcaster.toString()),
-                    title: Text("Blind/Low Vision User"),
+                    title: const Text("Blind/Low Vision User"),
                     leading: Radio(
                       value: ClientRole.Broadcaster,
                       groupValue: _role,
@@ -91,8 +48,7 @@ class IndexState extends State<IndexPage> {
                     ),
                   ),
                   ListTile(
-                    //title: Text(ClientRole.Audience.toString()),
-                    title: Text("Sighted Volunteer"),
+                    title: const Text("Sighted Volunteer"),
                     leading: Radio(
                       value: ClientRole.Audience,
                       groupValue: _role,
@@ -111,22 +67,14 @@ class IndexState extends State<IndexPage> {
                   children: <Widget>[
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: onJoin,
-                        child: Text('Join'),
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blueAccent),
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.white)),
-                      ),
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          final response = await getToken().then((value) => {});
-                          // here you can show toast or pop or whatever you wanna do
+                        onPressed: () => {
+                          getToken(_role).then((res) {
+                            setState(() {
+                              onJoin(res[0], res[1]);
+                            });
+                          })
                         },
-                        child: Text('Token'),
+                        child: Text('Join Call'),
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.blueAccent),
@@ -134,14 +82,6 @@ class IndexState extends State<IndexPage> {
                                 MaterialStateProperty.all(Colors.white)),
                       ),
                     ),
-                    // Expanded(
-                    //   child: RaisedButton(
-                    //     onPressed: onJoin,
-                    //     child: Text('Join'),
-                    //     color: Colors.blueAccent,
-                    //     textColor: Colors.white,
-                    //   ),
-                    // )
                   ],
                 ),
               )
@@ -153,34 +93,62 @@ class IndexState extends State<IndexPage> {
   }
 
   // Get token
-  Future<String> getToken() async {
-    final response = await http.get(
-        // Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-        Uri.parse("http://10.0.2.2:8080/new_caller?id=2&type=volunteer"),
-        headers: {"Accept": "application/json", "Connection": "Keep-Alive"});
+  Future<List<String>> getToken(ClientRole? role) async {
+    int id = 0;
 
-    print(response.body);
+    // Is user volunteer or beneficiary
+    String userRole = "v";
+    if (role == ClientRole.Broadcaster) {
+      userRole = "b";
+    }
 
-    _channelController.text = response.body;
-    return response.body;
+    final responseC = await http.get(
+        Uri.parse(
+            "https://orasee-token-server.herokuapp.com/gen_channel?id=$id&type=$userRole"),
+        headers: {"Accept": "application/json"});
+    String channelName = json.decode(responseC.body)["channelName"];
+    print(channelName);
+
+    final responseT = await http.get(
+        Uri.parse(
+            "https://orasee-token-server.herokuapp.com/access_token?channelName=$channelName&expireTime=86400"),
+        headers: {"Accept": "application/json"});
+
+    String token = json.decode(responseT.body)["token"];
+    print(token);
+    return [channelName, token];
   }
 
-  Future<void> onJoin() async {
-    // update input validation
-    setState(() {
-      channel.isEmpty ? _validateError = true : _validateError = false;
-    });
+  Future<void> onJoin(String channel, String token) async {
+    final res = await http.get(
+        Uri.parse(
+            "https://orasee-token-server.herokuapp.com/validate_channel?channel=$channel"),
+        headers: {"Accept": "application/json"});
+    bool isValid = json.decode(res.body)["is_valid"];
+
+    // if channel has been invalidated, generate new channel
+    if (!isValid) {
+      getToken(_role).then((res) {
+        setState(() {
+          onJoin(res[0], res[1]);
+        });
+      });
+      return;
+    }
+
     if (channel.isNotEmpty) {
       // await for camera and mic permissions before pushing video page
       await _handleCameraAndMic(Permission.camera);
       await _handleCameraAndMic(Permission.microphone);
       // push video page with given channel name
+      // ignore: use_build_context_synchronously
       await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => CallPage(
             channelName: channel,
             role: _role,
+            token: token,
           ),
         ),
       );
