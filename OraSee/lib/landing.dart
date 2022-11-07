@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:swip_change/home.dart';
+import 'package:swip_change/model/user_model.dart';
 import 'package:swip_change/start_page.dart';
 
 class Landing extends StatefulWidget {
@@ -143,17 +148,18 @@ class _LandingState extends State<Landing> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) {
-                            return StartPage(
-                              option: _seeker,
-                              logOut: false,
-                            );
-                          }),
-                        ),
-                      );
+                      signInWithAny();
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: ((context) {
+                      //       return StartPage(
+                      //         option: _seeker,
+                      //         logOut: false,
+                      //       );
+                      //     }),
+                      //   ),
+                      // );
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -227,5 +233,40 @@ class _LandingState extends State<Landing> {
         ),
       ),
     );
+  }
+
+  void signInWithAny() async {
+    await FirebaseAuth.instance
+        .signInAnonymously()
+        .then((uid) => {
+              Fluttertoast.showToast(msg: "Login Successful"),
+              postDetailsToFirestore(),
+            })
+        .catchError((e) {
+      Fluttertoast.showToast(
+        msg: "Something Went Wrong" + e!.toString(),
+      );
+    });
+  }
+
+  postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    UserModel userModel = UserModel();
+
+    userModel.uid = user?.uid;
+    userModel.options = "Seeker";
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user?.uid)
+        .set(userModel.toJson());
+
+    Fluttertoast.showToast(msg: "Account Create Successful");
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
   }
 }
