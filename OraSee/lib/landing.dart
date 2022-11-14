@@ -27,9 +27,6 @@ class _LandingState extends State<Landing> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(
-              height: height * 0.02,
-            ),
             Container(
               width: width,
               child: Column(
@@ -68,78 +65,13 @@ class _LandingState extends State<Landing> {
               ),
             ),
             SizedBox(
-              height: 40,
-            ),
-            Container(
-              width: width,
-              height: height * 0.3,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    "images/Landing.jpg",
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "429,073",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                      Text(
-                        "Blind",
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: 20,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "5,967,034",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                      Text(
-                        "Volunteer",
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: 20,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
+              height: 20,
             ),
             Column(
               children: [
                 SizedBox(
                   width: width,
-                  height: height * 0.1,
+                  height: height * 0.55,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF381BE9),
@@ -149,17 +81,6 @@ class _LandingState extends State<Landing> {
                     ),
                     onPressed: () {
                       signInWithAny();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: ((context) {
-                      //       return StartPage(
-                      //         option: _seeker,
-                      //         logOut: false,
-                      //       );
-                      //     }),
-                      //   ),
-                      // );
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 class UserModel {
   String? uid;
   String? lastName;
@@ -5,6 +7,8 @@ class UserModel {
   String? email;
   String? options;
   String? phone;
+  Queue<String>? seekerQueue;
+  Queue<dynamic>? volunteerQueue;
 
   UserModel({
     this.email,
@@ -13,6 +17,8 @@ class UserModel {
     this.options,
     this.uid,
     this.phone,
+    this.seekerQueue,
+    this.volunteerQueue,
   });
 
   // RECEIVE DATA FROM DB
@@ -35,5 +41,29 @@ class UserModel {
       "options": options,
       "phone": phone,
     };
+  }
+
+  void addSeekerToQueue(String id) {
+    final queue = Queue<String>();
+    queue.add(id);
+    seekerQueue = queue;
+  }
+
+  void addVolunteerToQueue(String id) {
+    final queue = Queue<String>();
+    queue.add(id);
+    volunteerQueue = queue;
+  }
+
+  void removeSeekerFromQueue(String id) {
+    final queue = Queue<String>();
+    queue.remove(id);
+    // seekerQueue.remove(id);
+  }
+
+  Queue<String> removeVolunteerFromQueue(String id) {
+    final queue = Queue<String>();
+    queue.remove(id);
+    return queue;
   }
 }

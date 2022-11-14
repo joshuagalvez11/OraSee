@@ -1,11 +1,10 @@
-import 'dart:ffi';
-
+import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swip_change/model/user_model.dart';
 import 'package:swip_change/screens/test.dart';
+import 'dart:collection';
 
 class VideoSupport extends StatefulWidget {
   const VideoSupport({Key? key}) : super(key: key);
@@ -17,7 +16,6 @@ class VideoSupport extends StatefulWidget {
 class _VideoSupportState extends State<VideoSupport> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loginUser = UserModel();
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -30,7 +28,22 @@ class _VideoSupportState extends State<VideoSupport> {
         .then((value) => {
               this.loginUser = UserModel.fromJson(value.data()),
               setState(
-                () {},
+                () {
+                  print("loginUser.options:${loginUser.options}");
+                  if ("${loginUser.options}" == "Seeker") {
+                    setState(() {
+                      // add user id into Queue for video call
+                      loginUser.addSeekerToQueue(user!.uid);
+                    });
+                  } else {
+                    setState(() {
+                      // add user id into Queue for video call
+                      loginUser.addVolunteerToQueue(user!.uid);
+                    });
+                  }
+                  print("seekResult ${loginUser.seekerQueue?.elementAt(0)}");
+                  print("volResult ${loginUser.volunteerQueue?.elementAt(0)}");
+                },
               ),
             });
   }
@@ -45,7 +58,6 @@ class _VideoSupportState extends State<VideoSupport> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-             
               Center(
                 child: TitleText(),
               ),
@@ -53,19 +65,18 @@ class _VideoSupportState extends State<VideoSupport> {
                 height: height * 0.03,
               ),
               GestureDetector(
-              onVerticalDragUpdate: ((DragUpdateDetails details) {
-                if(details.delta.dy>0){
-                  print("up");
-                 print(details);
-
-                }
-                if(details.delta.dy<0){
-                  print("down");
-                 print(details);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TestPage()));
-
-                }
-              }),
+                onVerticalDragUpdate: ((DragUpdateDetails details) {
+                  if (details.delta.dy > 0) {
+                    print("up");
+                    print(details);
+                  }
+                  if (details.delta.dy < 0) {
+                    print("down");
+                    print(details);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TestPage()));
+                  }
+                }),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(

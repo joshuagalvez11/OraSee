@@ -203,10 +203,7 @@ class _SettingState extends State<Setting> {
   Future<void> SignOut(BuildContext context) async {
     await _auth.signOut();
     // await FacebookAuth.instance.logOut();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => StartPage(
-              option: "",
-              logOut: true,
-            )));
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Landing()));
   }
 }
