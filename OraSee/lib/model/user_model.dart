@@ -54,16 +54,4 @@ class UserModel {
     queue.add(id);
     volunteerQueue = queue;
   }
-
-  void removeSeekerFromQueue(String id) {
-    final queue = Queue<String>();
-    queue.remove(id);
-    // seekerQueue.remove(id);
-  }
-
-  Queue<String> removeVolunteerFromQueue(String id) {
-    final queue = Queue<String>();
-    queue.remove(id);
-    return queue;
-  }
 }
