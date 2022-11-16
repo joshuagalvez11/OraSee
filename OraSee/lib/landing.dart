@@ -27,6 +27,9 @@ class _LandingState extends State<Landing> {
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Container(
               width: width,
               child: Column(
@@ -65,90 +68,79 @@ class _LandingState extends State<Landing> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
-            Column(
-              children: [
-                SizedBox(
-                  width: width,
-                  height: height * 0.55,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF381BE9),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: width,
+                    height: height * 0.6,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF381BE9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () {
+                        signInWithAny();
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            " Need Assistance",
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    onPressed: () {
-                      signInWithAny();
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "I need visual assistance",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          "Call a Company and Volunteer",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: width,
-                  height: height * 0.1,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF381BE9),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: width,
+                    height: height * 0.1,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF381BE9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => StartPage(
+                                      option: _volunteer,
+                                      logOut: false,
+                                    )));
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Be Volunteer",
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => StartPage(
-                                    option: _volunteer,
-                                    logOut: false,
-                                  )));
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "I'd like to be Volunteer",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          "Share your eyesight",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

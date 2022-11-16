@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:alan_voice/alan_voice.dart';
+import 'package:swip_change/landing.dart';
 import 'package:swip_change/model/user_model.dart';
 import 'package:swip_change/screens/community.dart';
 import 'package:swip_change/screens/setting.dart';
@@ -20,31 +21,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loginUser = UserModel();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-
+  bool isLoggedIn = FirebaseAuth.instance.currentUser != null ? true : false;
 
   _HomePageState() {
-   /// Init Alan Button with project key from Alan Studio      
-  AlanVoice.addButton(
-    "fb5d55b648fe678389120f328019f6312e956eca572e1d8b807a3e2338fdd0dc/stage",
-    buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT,
+    AlanVoice.addButton(
+      "fb5d55b648fe678389120f328019f6312e956eca572e1d8b807a3e2338fdd0dc/stage",
+      buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT,
     );
 
-  /// Handle commands from Alan Studio
-  AlanVoice.onCommand.add((command) => _handleCommand(command.data));
+    /// Handle commands from Alan Studio
+    AlanVoice.onCommand.add((command) => _handleCommand(command.data));
+  }
 
-}
-
-
-  
-
-  void _handleCommand(Map<String,dynamic>command){
+  void _handleCommand(Map<String, dynamic> command) {
     switch (command['command']) {
-     
       case "video":
         Navigator.pushNamed(context, '/videoPage');
         break;
@@ -71,16 +65,16 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-   Future<void> SignOut(BuildContext context) async {
-    await _auth.signOut();
-    // await FacebookAuth.instance.logOut();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => StartPage(
-              option: "",
-              logOut: true,
-            )));
+  Future<void> SignOut(BuildContext context) async {
+    await _auth.signOut().then((value) => {
+          // await FacebookAuth.instance.logOut();
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => Landing(),
+            ),
+          )
+        });
   }
-
 
   int _currentIndex = 0;
 
@@ -91,13 +85,13 @@ class _HomePageState extends State<HomePage> {
       icon: Icon(
         Icons.video_call,
         color: Color(0xff9AA0A6),
-        ),
+      ),
       label: "Video Support",
     ),
     BottomNavigationBarItem(
       icon: Icon(
         Icons.group,
-      color: Color(0xff9AA0A6),
+        color: Color(0xff9AA0A6),
       ),
       label: "Community",
     ),
@@ -105,7 +99,7 @@ class _HomePageState extends State<HomePage> {
       icon: Icon(
         Icons.settings,
         color: Color(0xff9AA0A6),
-        ),
+      ),
       label: "Setting",
     ),
   ];
@@ -125,8 +119,6 @@ class _HomePageState extends State<HomePage> {
           Community(),
           Setting(),
         ],
-        
-        
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

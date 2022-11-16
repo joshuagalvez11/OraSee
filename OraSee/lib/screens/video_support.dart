@@ -15,6 +15,7 @@ class VideoSupport extends StatefulWidget {
 
 class _VideoSupportState extends State<VideoSupport> {
   User? user = FirebaseAuth.instance.currentUser;
+  // call user modal
   UserModel loginUser = UserModel();
 
   @override
@@ -26,6 +27,7 @@ class _VideoSupportState extends State<VideoSupport> {
         .doc(user!.uid)
         .get()
         .then((value) => {
+              // pass data from db to modal
               this.loginUser = UserModel.fromJson(value.data()),
               setState(
                 () {
@@ -88,7 +90,12 @@ class _VideoSupportState extends State<VideoSupport> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           )),
-                      onPressed: () {},
+                      onPressed: () {
+                        print(
+                            "seekResult ${loginUser.seekerQueue?.elementAt(0)}");
+                        print(
+                            "volResult ${loginUser.volunteerQueue?.elementAt(0)}");
+                      },
                       child: ButtonText(),
                     ),
                   ),

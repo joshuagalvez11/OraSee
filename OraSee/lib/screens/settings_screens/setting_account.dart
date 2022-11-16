@@ -332,11 +332,17 @@ class _SettingAccountState extends State<SettingAccount> {
                             .doc(user!.uid);
 
                         // update specific field
-                        docUser.delete().then((value) => {
-                              Fluttertoast.showToast(msg: "Delete Successful"),
-                            });
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => Landing()));
+                        docUser
+                            .delete()
+                            .then((value) => {
+                                  Fluttertoast.showToast(
+                                      msg: "Delete Successful"),
+                                })
+                            .then((value) => {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => Landing()))
+                                });
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey[800],
