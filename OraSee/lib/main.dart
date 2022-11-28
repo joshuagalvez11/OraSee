@@ -27,60 +27,42 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isLoggedIn = FirebaseAuth.instance.currentUser != null ? true : false;
 
-    // if (!isLoggedIn) {
-    //   return MaterialApp(
-    //     title: 'Flutter Demo',
-    //     debugShowCheckedModeBanner: false,
-    //     theme: ThemeData(
-    //       primarySwatch: Colors.blue,
-    //       scaffoldBackgroundColor: Colors.black,
-    //     ),
-    //     home: HomePage(),
-    //     routes: {
-    //       "/videoPage": (context) => HomePage(),
-    //       "/communityPage": (context) => Community(),
-    //       "/settingPage": (context) => Setting(),
-    //       "/SAccountInfo": (context) => SettingAccount(),
-    //       "/SEmailChange": (context) => EmailSetting(),
-    //       "/SPasswordChange": (context) => PasswordSetting()
-    //     },
-    //   );
-    // } else {
-    //   return MaterialApp(
-    //     title: 'Flutter Demo',
-    //     debugShowCheckedModeBanner: false,
-    //     theme: ThemeData(
-    //       primarySwatch: Colors.blue,
-    //       scaffoldBackgroundColor: Colors.black,
-    //     ),
-    //     home: Landing(),
-    //     routes: {
-    //       "/videoPage": (context) => HomePage(),
-    //       "/communityPage": (context) => Community(),
-    //       "/settingPage": (context) => Setting(),
-    //       "/SAccountInfo": (context) => SettingAccount(),
-    //       "/SEmailChange": (context) => EmailSetting(),
-    //       "/SPasswordChange": (context) => PasswordSetting()
-    //     },
-    //   );
-    // }
-
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.black,
-      ),
-      home: HomePage(),
-      routes: {
-        "/videoPage": (context) => HomePage(),
-        "/communityPage": (context) => Community(),
-        "/settingPage": (context) => Setting(),
-        "/SAccountInfo": (context) => SettingAccount(),
-        "/SEmailChange": (context) => EmailSetting(),
-        "/SPasswordChange": (context) => PasswordSetting()
-      },
-    );
+    if (!isLoggedIn) {
+      return MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.black,
+        ),
+        home: Landing(),
+        routes: {
+          "/videoPage": (context) => HomePage(),
+          "/communityPage": (context) => Community(),
+          "/settingPage": (context) => Setting(),
+          "/SAccountInfo": (context) => SettingAccount(),
+          "/SEmailChange": (context) => EmailSetting(),
+          "/SPasswordChange": (context) => PasswordSetting()
+        },
+      );
+    } else {
+      return MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.black,
+        ),
+        home: HomePage(),
+        routes: {
+          "/videoPage": (context) => HomePage(),
+          "/communityPage": (context) => Community(),
+          "/settingPage": (context) => Setting(),
+          "/SAccountInfo": (context) => SettingAccount(),
+          "/SEmailChange": (context) => EmailSetting(),
+          "/SPasswordChange": (context) => PasswordSetting()
+        },
+      );
+    }
   }
 }

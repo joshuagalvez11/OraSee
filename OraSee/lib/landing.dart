@@ -27,9 +27,6 @@ class _LandingState extends State<Landing> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(
-              height: 20,
-            ),
             Container(
               width: width,
               child: Column(
