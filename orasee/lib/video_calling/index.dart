@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 
-import './call.dart';
+//import './call.dart';
+import 'package:orasee/video_calling/call.dart';
 
 class IndexPage extends StatefulWidget {
   @override

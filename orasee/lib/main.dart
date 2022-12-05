@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:swip_change/home.dart';
-import 'package:swip_change/landing.dart';
-import 'package:swip_change/screens/community.dart';
-import 'package:swip_change/screens/setting.dart';
-import 'package:swip_change/screens/settings_screens/setting_account.dart';
-import 'package:swip_change/screens/settings_screens/setting_email.dart';
-import 'package:swip_change/screens/settings_screens/setting_password.dart';
-import 'package:swip_change/screens/test.dart';
-import 'package:swip_change/start_page.dart';
+import 'package:orasee/home.dart';
+import 'package:orasee/landing.dart';
+import 'package:orasee/screens/community.dart';
+import 'package:orasee/screens/setting.dart';
+import 'package:orasee/screens/settings_screens/setting_account.dart';
+import 'package:orasee/screens/settings_screens/setting_email.dart';
+import 'package:orasee/screens/settings_screens/setting_password.dart';
+import 'package:orasee/screens/test.dart';
+import 'package:orasee/start_page.dart';
 
 import 'email_login.dart';
 

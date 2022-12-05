@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:swip_change/home.dart';
-import 'package:swip_change/model/user_model.dart';
+import 'package:orasee/home.dart';
+import 'package:orasee/model/user_model.dart';
 
 class PhoneVerifyPage extends StatefulWidget {
   final String verificationId;

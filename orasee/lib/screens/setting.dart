@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:swip_change/email_login.dart';
-import 'package:swip_change/landing.dart';
-import 'package:swip_change/model/user_model.dart';
-import 'package:swip_change/screens/settings_screens/setting_account.dart';
-import 'package:swip_change/screens/settings_screens/setting_email.dart';
-import 'package:swip_change/screens/settings_screens/setting_password.dart';
-import 'package:swip_change/start_page.dart';
+import 'package:orasee/email_login.dart';
+import 'package:orasee/landing.dart';
+import 'package:orasee/model/user_model.dart';
+import 'package:orasee/screens/settings_screens/setting_account.dart';
+import 'package:orasee/screens/settings_screens/setting_email.dart';
+import 'package:orasee/screens/settings_screens/setting_password.dart';
+import 'package:orasee/start_page.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);

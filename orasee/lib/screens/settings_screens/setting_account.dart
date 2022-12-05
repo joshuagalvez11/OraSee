@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:swip_change/email_login.dart';
-import 'package:swip_change/landing.dart';
-import 'package:swip_change/model/user_model.dart';
+import 'package:orasee/email_login.dart';
+import 'package:orasee/landing.dart';
+import 'package:orasee/model/user_model.dart';
 
 class SettingAccount extends StatefulWidget {
   const SettingAccount({super.key});

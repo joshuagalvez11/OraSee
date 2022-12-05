@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:swip_change/home.dart';
-import 'package:swip_change/model/user_model.dart';
+import 'package:orasee/home.dart';
+import 'package:orasee/model/user_model.dart';
 
 class EmailLoginPage extends StatefulWidget {
   final String? option;

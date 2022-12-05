@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:alan_voice/alan_voice.dart';
-import 'package:swip_change/landing.dart';
-import 'package:swip_change/model/user_model.dart';
-import 'package:swip_change/screens/community.dart';
-import 'package:swip_change/screens/setting.dart';
-import 'package:swip_change/screens/test.dart';
-import 'package:swip_change/screens/video_support.dart';
-import 'package:swip_change/start_page.dart';
+import 'package:orasee/landing.dart';
+import 'package:orasee/model/user_model.dart';
+import 'package:orasee/screens/community.dart';
+import 'package:orasee/screens/setting.dart';
+import 'package:orasee/screens/test.dart';
+import 'package:orasee/screens/video_support.dart';
+import 'package:orasee/start_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

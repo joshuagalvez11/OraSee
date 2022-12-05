@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:swip_change/email_login.dart';
+import 'package:orasee/email_login.dart';
 
 class PasswordSetting extends StatefulWidget {
   const PasswordSetting({super.key});
@@ -115,7 +115,8 @@ class _PasswordSettingState extends State<PasswordSetting> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EmailLoginPage(option: "")))
+                                  builder: (context) =>
+                                      EmailLoginPage(option: "")))
                         })
                     .catchError((onError) {
                   Fluttertoast.showToast(

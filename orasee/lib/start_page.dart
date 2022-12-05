@@ -8,10 +8,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:swip_change/home.dart';
-import 'package:swip_change/email_login.dart';
-import 'package:swip_change/login_phone/phone_login_page.dart';
-import 'package:swip_change/model/user_model.dart';
+import 'package:orasee/home.dart';
+import 'package:orasee/email_login.dart';
+import 'package:orasee/login_phone/phone_login_page.dart';
+import 'package:orasee/model/user_model.dart';
 
 class StartPage extends StatefulWidget {
   final String option;
