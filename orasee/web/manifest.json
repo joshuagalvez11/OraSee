@@ -1,11 +1,11 @@
 {
-    "name": "swip_change",
-    "short_name": "swip_change",
+    "name": "facebook",
+    "short_name": "facebook",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A facebook newsfeed ui",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
