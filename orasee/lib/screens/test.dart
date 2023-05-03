@@ -68,7 +68,7 @@ class _MyTestPageState extends State<MyTestPage> {
   void _speak() async {
     await flutterTts.setVolume(1);
     await flutterTts.setPitch(.8);
-    await flutterTts.setSpeechRate(.8);
+    await flutterTts.setSpeechRate(.7);
     await flutterTts.setLanguage("en-US");
     var txt = "";
     if(controller.text == ""){
@@ -194,81 +194,87 @@ class _MyTestPageState extends State<MyTestPage> {
                   ),
                   Expanded(
                       child:
-                      new Column(
+                          new GestureDetector(
+                              onTap: _listen,
+                              child:
+                          new Column(
                           children: [
-                            Container(
-                              color: Colors.pink,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  TextButton(
-                                    // onPressed: _speechToText.isNotListening ? _startListening : _stopListening,
-                                    onPressed: _listen,
-                                    child: Container(
-                                      color: Colors.pink,
-                                      width: 200,
-                                      height: 30,
-                                      child: const Text(
-                                        'Speech to Text',
-                                        style: TextStyle(color: Colors.white, fontSize: 26.0),
-                                      ),
-                                      //child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic)
+                          Container(
+                          color: Colors.pink,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                TextButton(
+                                  // onPressed: _speechToText.isNotListening ? _startListening : _stopListening,
+                                  onPressed: (){},
+                                  child: Container(
+                                    color: Colors.pink,
+                                    width: 200,
+                                    height: 30,
+                                    child: const Text(
+                                      'Speech to Text',
+                                      style: TextStyle(color: Colors.white, fontSize: 26.0),
                                     ),
+                                    //child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic)
                                   ),
-                                ],
+                                ),
+                              ],
+                            ),
+                          ),
+                      Container(
+                        color: Colors.pink,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            TextButton(
+                              // onPressed: _speechToText.isNotListening ? _startListening : _stopListening,
+                              // onPressed: _listen,
+                              onPressed: _listen,
+                              child: Container(
+                                  color: Colors.pink,
+                                  width: 200,
+                                  height: 100,
+                                  // child: const Text(
+                                  //   'Speech to Text',
+                                  //   style: TextStyle(color: Colors.white, fontSize: 26.0),
+                                  // ),
+                                  child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic)
                               ),
                             ),
-                            Container(
-                              color: Colors.pink,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  TextButton(
-                                    // onPressed: _speechToText.isNotListening ? _startListening : _stopListening,
-                                    onPressed: _listen,
-                                    child: Container(
-                                        color: Colors.pink,
-                                        width: 200,
-                                        height: 100,
-                                        // child: const Text(
-                                        //   'Speech to Text',
-                                        //   style: TextStyle(color: Colors.white, fontSize: 26.0),
-                                        // ),
-                                        child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic)
-                                    ),
-                                  ),
-                                ],
+                          ],
+                        ),
+                      ),
+                      Container(
+                        color: Colors.pink,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            TextButton(
+                              // onPressed: _speechToText.isNotListening ? _startListening : _stopListening,
+                              onPressed: (){},
+                              child: Container(
+                                  color: Colors.pink,
+                                  width: 200,
+                                  height: 30,
+                                  child:
+                                  Text(
+                                      'Confidence: ${(_confidence * 100.0).toStringAsFixed(1)}%',
+                                      style: TextStyle(color: Colors.white, fontSize: 18.0)
+                                  )
+                                // Text(
+                                //   _text,
+                                //   style: TextStyle(color: Colors.white, fontSize: 26.0),
+                                // ),
+                                //child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic)
                               ),
                             ),
-                            Container(
-                              color: Colors.pink,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  TextButton(
-                                    // onPressed: _speechToText.isNotListening ? _startListening : _stopListening,
-                                    onPressed: _listen,
-                                    child: Container(
-                                        color: Colors.pink,
-                                        width: 200,
-                                        height: 30,
-                                        child:
-                                        Text(
-                                            'Confidence: ${(_confidence * 100.0).toStringAsFixed(1)}%',
-                                            style: TextStyle(color: Colors.white, fontSize: 18.0)
-                                        )
-                                      // Text(
-                                      //   _text,
-                                      //   style: TextStyle(color: Colors.white, fontSize: 26.0),
-                                      // ),
-                                      //child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic)
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ]
-                      )
+                          ],
+                        ),
+                      ),
+                      ]
+                  )
+                          )
+
 
 
                     // Container(
@@ -316,7 +322,7 @@ class _MyTestPageState extends State<MyTestPage> {
                           filled: true,
                           fillColor: Colors.grey,
                           border: OutlineInputBorder(),
-                          hintText: 'This is a page with a variety of tools to help with your day to day activities.\nEach corner contains a button with a different tool.\nTop left- Text to speech\nTop right- Speech to text\nBottom left- Image to text\nBottom right- tbd',
+                          hintText: 'This is a page with a variety of tools to help with your day to day activities.\nEach corner contains a button with a different tool.\nTop left- Text to speech\nTop right- Speech to text\nBottom left- Image to text camera\nBottom Right- Image to text picture',
                         ),
                       ),
                     ),
