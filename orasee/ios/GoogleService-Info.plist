@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>724726532255-5000t9dc09sojevci0cm4buh3e317rgj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.724726532255-5000t9dc09sojevci0cm4buh3e317rgj</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>724726532255-8091vo6n6ck615slbfb9nb2n8fvbrc2n.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDZqeysKUhUvT-zuweUq5hgdFO-oI4ARzA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>724726532255</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.orasee</string>
+	<key>PROJECT_ID</key>
+	<string>video-efb81</string>
+	<key>STORAGE_BUCKET</key>
+	<string>video-efb81.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:724726532255:ios:b3a4e1a7cc58de33f9baaa</string>
+	<key>DATABASE_URL</key>
+	<string>https://video-efb81-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
